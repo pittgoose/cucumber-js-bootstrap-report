@@ -1,0 +1,24 @@
+<script type="text/ng-template" id="stepPanelTemplate">
+    <div class="step">
+        <div class="well well-sm step-comment"
+             ng-if="step.comments"
+             ng-repeat="comment in ::step.comments track by $index">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            {{comment.value}}
+        </div>
+        <div class="well well-sm" ng-class="::step.result.status">
+            <span ng-class="::statusIcons[step.result.status]" class="glyphicon"></span>
+            <b>{{::step.keyword}}</b> {{::step.name}}
+            <span class="step-location qa-mode">{{::_.last(step.match.location.split('/'))}}</span>
+            <pre class="debug-log step-string" ng-if="::step.doc_string">{{::step.doc_string.value}}</pre>
+        </div>
+        <table class="data-table" ng-if="::step.rows">
+            <tr ng-repeat="row in ::step.rows">
+                <td ng-repeat="cell in ::row.cells track by $index" class="data-table-cell">{{::cell}}</td>
+            </tr>
+        </table>
+        <pre class="debug-log qa-mode" ng-repeat="log in ::step.output track by $index">{{::log}}</pre>
+        <pre class="debug-log error-message" ng-if="::step.result.status == 'failed'"
+             ng-bind-html="::highlightFirstLine(step.result.error_message)"></pre>
+    </div>
+</script>

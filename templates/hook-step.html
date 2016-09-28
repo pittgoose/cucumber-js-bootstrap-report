@@ -1,0 +1,9 @@
+<script type="text/ng-template" id="hookPanelTemplate">
+    <div class="step" ng-show="::step">
+        <div class="well well-sm failed">
+            <span ng-class="::statusIcons[step.result.status]" class="glyphicon"></span>
+            Failure in <b>{{::type}}</b> hook at <b>{{::step.match.location}}</b>. Talk to QA to debug.
+        </div>
+        <pre class="debug-log qa-mode">{{::step.result.error_message}}</pre>
+    </div>
+</script>

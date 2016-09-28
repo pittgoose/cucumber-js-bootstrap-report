@@ -1,0 +1,12 @@
+<script type="text/ng-template" id="attemptsTabHeaderTemplate">
+    <ul class="nav nav-tabs nav-justified">
+        <li class="head-tabs" ng-repeat="attempt in ::attempts track by $index" ng-class="::{active: $last}"
+            ng-if="::attempt.data.length > 0">
+            <a ng-class="::attempt.data.status" id="toggle{{::attempt.name}}Attempt" data-toggle="tab"
+               ng-href="#{{::attempt.name}}Attempt" class="capitalize">
+                <span ng-class="::statusIcons[attempt.data.status]"
+                      class="glyphicon"></span> {{::capitalizeUnderscoredName(attempt.name)}}
+            </a>
+        </li>
+    </ul>
+</script>

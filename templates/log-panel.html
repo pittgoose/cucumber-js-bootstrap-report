@@ -1,0 +1,49 @@
+<script type="text/ng-template" id="logPanelTemplate">
+    <div class="panel-group log-panel" id="{{::scenario.uniqueId}}logs">
+        <div class="panel panel-default" ng-repeat="(type, log) in scenario.afterLogs"
+             ng-class="{'qa-mode': type == 'scenario_logs'}" ng-if="::log != ''">
+            <div class="panel-heading log-panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse"
+                       data-parent="#{{::scenario.uniqueId}}logs"
+                       href="#{{::scenario.uniqueId}}{{type}}LogPanel"
+                       class="capitalize">{{::capitalizeUnderscoredName(type)}}</a>
+                </h4>
+            </div>
+            <div id="{{::scenario.uniqueId}}{{type}}LogPanel" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div ng-switch="::type">
+                        <div ng-switch-when="elasticsearch_logs"
+                             ng-init="showInfoLogs = true; showWarningLogs = true; showErrorLogs = true"
+                             ng-class="{'show-info-logs': showInfoLogs, 'show-warning-logs': showWarningLogs, 'show-error-logs': showErrorLogs}">
+                            <div class="elasticsearch-filters">
+                                <span class="btn btn-sm failed log-filter">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" ng-model="showErrorLogs"> Show ERROR logs
+                                    </label>
+                                </span>
+                                <span class="btn btn-sm warning log-filter">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" ng-model="showWarningLogs"> Show WARNING logs
+                                    </label>
+                                </span>
+                                <span class="btn btn-sm info log-filter">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" ng-model="showInfoLogs"> Show INFO logs
+                                    </label>
+                                </span>
+                            </div>
+                            <h1 ng-if="!showInfoLogs && !showWarningLogs && !showErrorLogs">
+                                Make a selection to show logs.</h1>
+                            <div ng-bind-html="::styleElasticsearchLogs(log)"></div>
+                        </div>
+                        <div ng-switch-default>
+                            <pre class="debug-log">{{::log}}</pre>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,112 @@
+<script type="text/ng-template" id="runStatsTemplate">
+    <div class="stats-container">
+        <table class="table stats-table">
+            <thead>
+            <th>Run Result</th>
+            <th>Device</th>
+            <th>Browser</th>
+            <th>Server</th>
+            <th>Start Time</th>
+            <th>Run Time (h:m:s)</th>
+            </thead>
+            <tbody>
+            <tr>
+                <td ng-switch="::runOptions.run_status">
+                    <span ng-switch-when="failed"><span>{{::finalFailed}}</span> failed out of
+                    {{::_.first(attempts).data.stats.totalCount}}</span>
+                    <span ng-switch-default>Passed <span class="glyphicon glyphicon-ok-circle"></span></span>
+                </td>
+                <td>
+                    <embed-image class="stats-icon" data="::runOptions.device_icon"></embed-image>
+                    {{::runOptions.device}}
+                </td>
+                <td>
+                    <embed-image class="stats-icon" data="::runOptions.browser_icon"></embed-image>
+                    {{::runOptions.browser}}
+                </td>
+                <td>{{::runOptions.server}}</td>
+                <td>{{::runOptions.start_time_string}}</td>
+                <td>
+                    <span class="clipboard" data-toggle="tooltip" data-placement="top" title="Click to copy!"
+                          data-clipboard-text="{{::runOptions.running_time_string}}">{{::runOptions.running_time_string}}
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="qa-mode">
+            <div class="well well-sm" ng-if="::runOptions.skipped_jira_tags.length > 0">
+                <h4><span class="glyphicon glyphicon-remove-circle"></span> Failed to reach JIRA when determining which
+                    <b>@exclude_on_bug</b> tags are still in open status.
+                </h4>
+                The following tag(s) were included in the run but the JIRA ticket might still be open: <br>
+                <div class="skipped-jira-tags"><span
+                        class="well well-sm scenario-tags"
+                        ng-repeat="tag in ::runOptions.skipped_jira_tags track by $index">{{tag}}</span>
+                </div>
+            </div>
+            <div class="undefined-scenarios" ng-if="::undefinedScenarios.length > 0">
+                <div class="well well-sm undefined">
+                    <h4 class="undefined-header" data-toggle="collapse" data-target="#undefinedSteps">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                        There is at least one step called in a feature file which is not defined in a step file.<br>
+                        This needs to be fixed ASAP. Click to see details...
+                    </h4>
+                </div>
+                <div id="undefinedSteps" class="collapse">
+                    <div class="well well-sm undefined"
+                         ng-repeat="undefinedScenario in ::undefinedScenarios">
+                        {{::undefinedScenario.keyword}}: <b>{{::undefinedScenario.name}}</b>
+                        <br>Step name: <b>{{::undefinedScenario.step.keyword}} {{::undefinedScenario.step.name}}</b>
+                        <br>Step location: <b>{{::undefinedScenario.step.match.location}}</b>
+                    </div>
+                </div>
+            </div>
+            <table class="table stats-table">
+                <thead>
+                <th>Attempt</th>
+                <th>Passed (<span class="clipboard"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Click to copy!"
+                                  data-clipboard-text="{{::totalPassed}}"><b>{{::totalPassed}}</b></span>)
+                </th>
+                <th>Failed</th>
+                <th>Total</th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="attempt in ::attempts track by $index" ng-if="::attempt.data.stats.totalCount > 0">
+                    <td class="capitalize"><span
+                            ng-class="::statusIcons[attempt.data.status]"
+                            class="glyphicon"></span> {{::capitalizeUnderscoredName(attempt.name)}}
+                    </td>
+                    <td ng-repeat="(key, stat) in ::attempt.data.stats track by $index"><span class="clipboard"
+                                                                                              data-toggle="tooltip"
+                                                                                              data-placement="top"
+                                                                                              title="Click to copy!"
+                                                                                              data-clipboard-text="{{::stat}}">{{::stat}}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table stats-table">
+                <thead>
+                <th>Tags</th>
+                <th>Groups</th>
+                <th>Automation Node</th>
+                <th>Upstream Job</th>
+                <th>Jenkins Build</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{::runOptions.passed_tags}}</td>
+                    <td>{{::runOptions.groups}}</td>
+                    <td>{{::runOptions.node_name}}</td>
+                    <td>{{::runOptions.upstream_jenkins}}</td>
+                    <td>{{::runOptions.jenkins_build_name}} #{{::runOptions.jenkins_build_number}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</script>

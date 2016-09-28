@@ -1,0 +1,56 @@
+<script type="text/ng-template" id="scenarioPanelTemplate">
+    <div class="panel panel-default scenario"
+         ng-class="::'hide-' + scenario.status">
+        <div class="panel-heading" ng-class="::scenario.status">
+            <h4>
+                <span ng-class="::statusIcons[scenario.status]" class="glyphicon"></span>
+                <a data-toggle="collapse" id="toggle{{::scenario.uniqueId}}"
+                   ng-href="#{{::scenario.uniqueId}}">{{::scenario.keyword}}: {{::scenario.name}}<span
+                        ng-if="::scenario.example"> - Example: <span ng-if="::scenario.example_group">{{::scenario.example_group}}</span>{{::scenario.example}}</span></a>
+                <a class="scenario-link" data-toggle="tooltip" title="Click to copy!"
+                   data-clipboard-text="{{::runOptions.jenkins_url}}artifact/trunk/tests/Watir/tmp/final_report/final_report.html#{{::scenario.uniqueId}}"
+                   ng-href="#{{::scenario.uniqueId}}"><span class="glyphicon glyphicon-link"></span></a>
+                <div class="feature-uri qa-mode">{{::feature.uri}}:{{::scenario.line}}</div>
+            </h4>
+        </div>
+        <div id="{{::scenario.uniqueId}}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="scenario-tags-group qa-mode">
+                    <span class="well well-sm scenario-tags"
+                          ng-repeat="tag in ::scenario.tags">{{::tag.name}}</span>
+                </div>
+                <div ng-if="::scenario.example_data" class="qa-mode">
+                    <div class="well well-sm step-comment"><span class="glyphicon glyphicon-info-sign"></span>
+                        Data for Example: <span ng-if="::scenario.example_group">{{::scenario.example_group}}</span>{{::scenario.example}}
+                        <table class="data-table">
+                            <tr ng-repeat="(key, value) in ::scenario.example_data">
+                                <td class="data-table-cell"><b>{{::key}}</b></td>
+                                <td class="data-table-cell">{{::value}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="well well-sm step-comment"
+                     ng-if="::scenario.comments"
+                     ng-repeat="comment in ::scenario.comments track by $index">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                    {{::comment.value}}
+                </div>
+                <hook-panel ng-repeat="step in ::scenario.failedBefores" step="::step"
+                            type="before"></hook-panel>
+                <step-panel ng-repeat="step in ::scenario.combinedSteps"
+                            ng-if="::step.result.status != 'skipped'"></step-panel>
+                <hook-panel ng-repeat="step in ::scenario.failedAfters" step="::step"
+                            type="after"></hook-panel>
+                <screenshot ng-if="::scenario.screenshot"></screenshot>
+                <log-panel></log-panel>
+                <div class="btn-group-vertical pull-right">
+                    <button class="btn btn-default btn-sm close-scenario" data-toggle="collapse"
+                            ng-href="#{{::scenario.uniqueId}}"><span
+                            class="glyphicon glyphicon-resize-small"></span> Collapse
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

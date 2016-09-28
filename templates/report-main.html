@@ -1,0 +1,24 @@
+<script type="text/ng-template" id="reportMainTemplate">
+    <div ng-class="{'qa-mode-active': qaMode, 'show-passed-active': showPassed, 'show-failed-active': showFailed}">
+        <navbar></navbar>
+        <div class="container under-nav">
+            <div class="well well-sm step-comment" ng-bind-html="::chuckNorrisQuote"></div>
+            <run-stats></run-stats>
+            <attempts-tab-header></attempts-tab-header>
+        </div>
+        <div class="tab-content">
+            <attempts-panels></attempts-panels>
+        </div>
+        <div id="copiedLinkModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p>Direct link to scenario has been copied to clipboard.<br>
+                            You can share this link to take someone directly to this scenario.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        logFilesPlaceholder
+    </div>
+</script>

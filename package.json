@@ -1,0 +1,17 @@
+{
+  "name": "cucumber-js-bootstrap-report",
+  "version": "0.0.1",
+  "description": "A pretty bootstrap report created from Cucucmber's JSON output files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "cucumber",
+    "protractor",
+    "node",
+    "npm"
+  ],
+  "author": "Yehuda Miller (yehudafmiller@gmail.com)",
+  "license": "ISC"
+}

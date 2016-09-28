@@ -1,0 +1,10 @@
+<script type="text/ng-template" id="featurePanelTemplate">
+    <div class="feature" ng-class="::'hide-' + feature.status + (feature.hasPassed ? ' hide-passed' : '')">
+        <h3>Feature: {{::feature.name}}</h3>
+
+        <div class="panel-group" id="{{::feature.uniqueId}}">
+            <scenario-panel ng-repeat="scenario in ::feature.elements"
+                            ng-if="::scenario.type != 'background' && scenario.status != 'undefined'"></scenario-panel>
+        </div>
+    </div>
+</script>

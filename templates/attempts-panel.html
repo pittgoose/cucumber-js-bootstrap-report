@@ -1,0 +1,18 @@
+<script type="text/ng-template" id="attemptsPanelsTemplate">
+    <div class="tab-pane fade" ng-repeat="attempt in ::attempts track by $index" id="{{::attempt.name}}Attempt"
+         ng-class="::{active: $last, in: $last}" ng-if="::attempt.data.length > 0">
+        <div class="no-scenarios-panel" ng-switch="::attempt.data.stats.failedCount">
+            <span ng-switch-when="0">
+                <h3 class="nothing-to-see" ng-class="{'show-passed': showPassed}">
+                    <span class="glyphicon glyphicon-ok-circle"></span> All tests passed!</h3>
+            </span>
+            <span ng-switch-default>
+                <h3 class="nothing-to-see" ng-class="{'show-passed': showPassed, 'show-failed': showFailed}">All tests are hidden in this view. Change the filters to see some tests.</h3>
+            </span>
+        </div>
+        <div class="feature-group container">
+            <feature-panel ng-repeat="feature in ::attempt.data"
+                           ng-if="::feature.status != 'undefined'"></feature-panel>
+        </div>
+    </div>
+</script>

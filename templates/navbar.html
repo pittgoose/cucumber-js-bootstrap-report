@@ -1,0 +1,63 @@
+<script type="text/ng-template" id="navbarTemplate">
+    <div>
+        <nav class="navbar navbar-default navbar-fixed-top main-nav">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand">
+                        <embed-image class="header-logo" data="::myHeritageLogo"></embed-image>
+                    </a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a ng-click="toggleFlag('showPassed')" ng-class="{active: showPassed}">
+                            <span class="glyphicon"
+                                  ng-class="::statusIcons['passed']">
+                            </span> Passed: <input
+                                type="checkbox"
+                                data-style="ios"
+                                data-onstyle="success"
+                                data-offstyle="danger"
+                                id="showPassedNavToggle"
+                                data-size="mini"
+                                data-toggle="toggle"
+                                data-on="Shown"
+                                data-off="Hidden">
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="toggleFlag('showFailed')" ng-class="{active: showFailed}">
+                            <span class="glyphicon" ng-class="::statusIcons['failed']"></span> Failed: <input
+                                type="checkbox"
+                                data-style="ios"
+                                data-onstyle="success"
+                                data-offstyle="danger"
+                                id="showFailedNavToggle"
+                                data-size="mini"
+                                data-toggle="toggle"
+                                data-on="Shown"
+                                data-off="Hidden">
+                        </a>
+                    </li>
+                    <li><a href="#" id="expandall" ng-click="expandAll()"><span
+                            class="glyphicon glyphicon-resize-full"></span> Expand all</a>
+                    </li>
+                    </li>
+                    <li><a href="#" id="closeall" ng-click="collapseAll()"><span
+                            class="glyphicon glyphicon-resize-small"></span> Collapse all</a>
+                    </li>
+                    <li>
+                        <a ng-click="toggleFlag('qaMode')" ng-class="{active: qaMode}">
+                            QA Mode: <input type="checkbox"
+                                            data-style="ios"
+                                            data-onstyle="success"
+                                            data-offstyle="danger"
+                                            id="qaModeNavToggle"
+                                            data-size="mini"
+                                            data-toggle="toggle">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</script>
